@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { TextInput, Text, View, ImageBackground } from "react-native";
+import hotBackground from "./assets/hot.png";
+import coldBackground from "./assets/cold.png";
+import { Input } from "./Component/Input/Input";
+import { s } from "./WeatherStyle";
+import { Button } from "react-native-web";
+import { ButtonConvert } from "./Component/Button/ButtonConvert";
+import { TextDisplay } from "./Component/DisplayText/TextDisplay";
+import { useState } from "react";
+
+import { convertToFahrenheit, convertToCelcius } from "./utils/Temperature";
 
 export default function App() {
+  const [input, setInput] = useState(0);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ImageBackground source={hotBackground} style={s.background}>
+      <SafeAreaProvider>
+        <SafeAreaView style={s.root}>
+          <View style={s.workspace}>
+            <TextDisplay suhu={convertToFahrenheit(input)} unit="F" />
+            <Input onChange={setInput} />
+            <ButtonConvert />
+          </View>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
